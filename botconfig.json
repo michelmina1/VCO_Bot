@@ -1,0 +1,9 @@
+{
+    "database": {
+        "connection_string": "DRIVER={ODBC Driver 17 for SQL Server};Server=localhost;Database=VCO;User Id=VCOUser;Password=VCOPass;",
+        "trust_server": true,
+        "username": "VCOUser",
+
+        "password": "VCOPass"
+    }
+}
