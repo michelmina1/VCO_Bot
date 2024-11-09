@@ -4,7 +4,7 @@ BEGIN
     CREATE TABLE Account (
         AccountID INT PRIMARY KEY IDENTITY(1,1),
         Name NVARCHAR(100) NOT NULL,
-        Profession NVARCHAR(100) NOT NULL
+        Profession NVARCHAR(100)
     );
 END
 
