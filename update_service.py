@@ -1,5 +1,5 @@
 import pyodbc,json
-import Interfaces.Win32Interface as Win32Interface
+import Interfaces.MemoryInterface as MemoryInterface
 import Interfaces.SQLInterface as SQLInterface
 def init_db():
     with open('botconfig.json', 'r') as file:
@@ -18,14 +18,17 @@ def init_db():
 class Account:
     def __init__(self, hwnd):
         self.hwnd = hwnd
-        self.windowname = Win32Interface.get_window_name(hwnd)
-        self.threadid, self.processid = Win32Interface.GetWindowThreadProcessId(hwnd)
-        self.process = Win32Interface.get_process_by_id(self.processid)
-        self.charname = Win32Interface.read_memory_charname(self)
+        self.windowname = MemoryInterface.get_window_name(hwnd)
+        self.threadid, self.processid = MemoryInterface.GetWindowThreadProcessId(hwnd)
+        self.process = MemoryInterface.get_process_by_id(self.processid)
+        self.charname = self.windowname
+        #self.charname = Win32Interface.read_memory_charname(self)
 
-        self.totalload = Win32Interface.read_memory_totalload(self)
-        self.currentload = Win32Interface.read_memory_currentload(self)
-        self.wepdura = Win32Interface.read_memory_currentdura(self)
+        self.totalload = MemoryInterface.read_memory_totalload(self)
+        self.currentload = MemoryInterface.read_memory_currentload(self)
+        self.wepdura = MemoryInterface.read_memory_currentdura(self)
+        self.x = MemoryInterface.read_memory_locx(self)
+        self.y = MemoryInterface.read_memory_locy(self)
         
         SQLInterface.upsert_account(self)
         self.print_account()
@@ -34,6 +37,8 @@ class Account:
         print(f"Total Load: {self.totalload}")
         print(f"Current Load: {self.currentload}")
         print(f"Current Durability: {self.wepdura}")
+        print(f"X: {self.x}")
+        print(f"Y: {self.y}")
         print()
 
-accounts = [Account(hwnd) for hwnd in Win32Interface.get_all_hwnd()]
+accounts = [Account(hwnd) for hwnd in MemoryInterface.get_all_hwnd()]

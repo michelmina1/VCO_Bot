@@ -31,9 +31,9 @@ with open('botconfig.json', 'r') as config_file:
             # Update accountstats
             cursor.execute("""
                 UPDATE accountstats
-                SET wepdura = ?, totalload = ?, currentload = ?
+                SET wepdura = ?, totalload = ?, currentload = ?, x = ?, y = ?
                 WHERE accountid = ?
-            """, account.wepdura, account.totalload, account.currentload, account_id)
+            """, account.wepdura, account.totalload, account.currentload, account.x, account.y, account_id)
             conn.commit()
             
         else:
@@ -46,13 +46,12 @@ with open('botconfig.json', 'r') as config_file:
                 # Get the account ID
             cursor.execute("SELECT accountid FROM Account WHERE name = ?", account.charname)
             account_id = cursor.fetchone()[0]
-            
             # Insert into accountstats
             cursor.execute("""
                 UPDATE accountstats
-                SET wepdura = ?, totalload = ?, currentload = ?
+                SET wepdura = ?, totalload = ?, currentload = ?, x = ?, y = ?
                 WHERE accountid = ?
-            """, account_id, account.wepdura, account.totalload, account.currentload)
+            """, account.wepdura, account.totalload, account.currentload,account.x, account.y, account_id)
             conn.commit()
         
         cursor.close()
