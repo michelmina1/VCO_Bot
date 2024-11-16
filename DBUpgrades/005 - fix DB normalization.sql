@@ -1,7 +1,7 @@
 USE VCO;
 
 -- Check if the current database version is less than 1.3
-IF EXISTS (SELECT * FROM DatabaseVersion WHERE VersionNumber < '1.3')
+IF NOT EXISTS (SELECT * FROM DatabaseVersion WHERE VersionNumber >= '1.3')
 BEGIN
     -- Add columns to Account table if they do not exist
     IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Account]') AND name = 'WepDura')
