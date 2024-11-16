@@ -1,7 +1,7 @@
 USE VCO;
 
 -- Check if the current database version is less than 1.3
-IF NOT EXISTS (SELECT * FROM DatabaseVersion WHERE VersionNumber >= '1.3')
+IF NOT EXISTS (SELECT * FROM DatabaseVersion WHERE VersionNumber >= '1.4')
 BEGIN
     -- Add columns to Account table if they do not exist
     IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Account]') AND name = 'WepDura')
@@ -49,5 +49,5 @@ BEGIN
     DROP TRIGGER [dbo].[trg_AccountInsert]
 
     -- Update the database version to 1.3
-    INSERT INTO DatabaseVersion (VersionNumber) VALUES ('1.3');
+    INSERT INTO DatabaseVersion (VersionNumber) VALUES ('1.4');
 END

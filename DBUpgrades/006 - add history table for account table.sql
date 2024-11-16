@@ -1,7 +1,7 @@
 USE VCO;
 
 -- Check if the current database version is less than 1.4
-IF NOT EXISTS (SELECT * FROM DatabaseVersion WHERE VersionNumber >= '1.4')
+IF NOT EXISTS (SELECT * FROM DatabaseVersion WHERE VersionNumber >= '1.5')
 BEGIN
     -- Create the AccountHistory table
     IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[AccountHistory]') AND type in (N'U'))
@@ -29,10 +29,7 @@ BEGIN
         );
     END
 
-    -- Update the database version to 1.4
-    INSERT INTO DatabaseVersion (VersionNumber) VALUES ('1.4');
-END
-
+    
 -- Create a trigger to update the AccountHistory table when the Account table is updated
 IF NOT EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[dbo].[trg_UpdateAccountHistory]'))
 BEGIN
@@ -63,4 +60,8 @@ BEGIN
         FROM inserted i;
     END
     ');
+END
+
+    -- Update the database version to 1.4
+    INSERT INTO DatabaseVersion (VersionNumber) VALUES ('1.5');
 END

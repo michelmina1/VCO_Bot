@@ -1,4 +1,5 @@
 USE VCO;
+    -- Create the Account table
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Account]') AND type in (N'U'))
 BEGIN
     CREATE TABLE Account (
@@ -45,23 +46,6 @@ BEGIN
     ALTER TABLE AccountStatus
     ADD FOREIGN KEY (AccountID) REFERENCES Account(AccountID),
         FOREIGN KEY (StatusID) REFERENCES Status(StatusID);
-END
-
--- AccountStats Table
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[AccountStats]') AND type in (N'U'))
-BEGIN
-    CREATE TABLE AccountStats (
-        AccountID INT PRIMARY KEY,
-        WepDura INT,
-        TotalLoad INT,
-        CurrentLoad INT,
-        x INT,
-        y INT,
-        Level INT,
-        HP INT,
-        SP INT,
-        FOREIGN KEY (AccountID) REFERENCES Account(AccountID)
-    );
 END
 
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[AccountSkills]') AND type in (N'U'))

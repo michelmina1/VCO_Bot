@@ -1,3 +1,5 @@
+IF NOT EXISTS (SELECT * FROM DatabaseVersion WHERE VersionNumber >= '1.3')
+BEGIN
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS 
                WHERE TABLE_NAME = 'Account' AND COLUMN_NAME = 'LastUpdated')
 BEGIN
@@ -43,3 +45,5 @@ BEGIN
     END;
     ')
 END;
+INSERT INTO DatabaseVersion (VersionNumber) VALUES ('1.3');
+END
