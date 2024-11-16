@@ -1,6 +1,7 @@
 import pyodbc,json
 import Interfaces.MemoryInterface as MemoryInterface
 import Interfaces.SQLInterface as SQLInterface
+import time
 def init_db():
     with open('botconfig.json', 'r') as file:
         config = json.load(file)
@@ -31,7 +32,7 @@ class Account:
         self.y = MemoryInterface.read_memory_locy(self)
         
         SQLInterface.upsert_account(self)
-        self.print_account()
+        #self.print_account()
     def print_account(self):
         print(f"Account: {self.charname}")
         print(f"Total Load: {self.totalload}")
@@ -42,3 +43,8 @@ class Account:
         print()
 
 accounts = [Account(hwnd) for hwnd in MemoryInterface.get_all_hwnd()]
+
+while(True):
+    for account in accounts:
+        account.__init__(account.hwnd)
+    time.sleep(0.1)
